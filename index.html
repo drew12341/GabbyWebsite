@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fill in the sentence</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -26,11 +28,21 @@
         footer {
             margin-right: 20px;
         }
+        #clearButton {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-5 mb-3">Fill in the sentence</h1>
+    <h1 class="mt-5 mb-3">
+        Fill in the sentence
+        <button id="clearButton" onclick="clearInputs()">Clear All</button>
+    </h1>
     <p class="sentence">
         Once upon a time there was a <input type="text" class="form-control inline-input" name="firstInput" oninput="saveInput('firstInput')" value=""><br>
         It was always <input type="text" class="form-control inline-input" name="secondInput" oninput="saveInput('secondInput')" value=""><br>
@@ -52,6 +64,16 @@
     function saveInput(inputName) {
         var inputValue = document.getElementsByName(inputName)[0].value;
         localStorage.setItem(inputName, inputValue);
+    }
+
+    // Function to clear all input values
+    function clearInputs() {
+        var inputNames = ['firstInput', 'secondInput', 'thirdInput', 'fourthInput', 'fifthInput', 'sixthInput', 'seventhInput', 'eighthInput'];
+
+        inputNames.forEach(function (inputName) {
+            document.getElementsByName(inputName)[0].value = '';
+            localStorage.removeItem(inputName); // Clear from localStorage as well
+        });
     }
 
     // Function to load input values from localStorage on page load
