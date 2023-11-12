@@ -29,12 +29,16 @@
             margin-right: 20px;
         }
         #clearButton {
-            background-color: yellow; /* Change the color to yellow */
-            color: black; /* Change the text color to black */
+            background-color: yellow;
+            color: black;
             border: none;
-            padding: 3px 5px; /* Adjust padding for a smaller button */
+            padding: 3px 5px;
             cursor: pointer;
-            font-size: 80%; /* Adjust font size for a smaller button text */
+            font-size: 80%;
+        }
+        #madeBy {
+            color: black;
+            margin-top: 20px; /* Add margin to separate from the content */
         }
     </style>
 </head>
@@ -56,6 +60,10 @@
 <footer>
     Copyright &copy; Gabby with some help from Dad and ChatGPT
 </footer>
+<!-- Made by input -->
+<div id="madeBy">
+    Made by <input type="text" id="madeByInput" oninput="displayMadeBy()" placeholder="Your Name">
+</div>
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -88,6 +96,13 @@
             }
         });
     };
+
+    // Function to display "Made by" with the user's input
+    function displayMadeBy() {
+        var madeByInput = document.getElementById('madeByInput').value;
+        var madeByElement = document.getElementById('madeBy');
+        madeByElement.innerHTML = 'Made by ' + madeByInput;
+    }
 </script>
 </body>
 </html>
