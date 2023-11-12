@@ -42,6 +42,7 @@
         }
         #madeByInput {
             font-size: 80%;
+            max-width: 100px; /* Adjust maximum width */
         }
     </style>
 </head>
@@ -65,7 +66,7 @@
 </footer>
 <!-- Made by input -->
 <div id="madeBy">
-    Made by <input type="text" id="madeByInput" oninput="displayMadeBy()" placeholder="Your Text">
+    Made by <input type="text" id="madeByInput" oninput="limitInputLength('madeByInput', 10)" placeholder="Your Text">
 </div>
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -99,6 +100,14 @@
             }
         });
     };
+
+    // Function to limit the input length
+    function limitInputLength(inputId, maxLength) {
+        var inputElement = document.getElementById(inputId);
+        if (inputElement.value.length > maxLength) {
+            inputElement.value = inputElement.value.slice(0, maxLength);
+        }
+    }
 
     // Function to display "Made by" with the user's input
     function displayMadeBy() {
