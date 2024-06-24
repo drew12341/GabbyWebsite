@@ -15,6 +15,7 @@
             background-color: violet;
             border: 2px solid black;
             padding: 10px;
+            transition: background-color 1.5s;
         }
         .inline-input {
             display: inline-block;
@@ -44,6 +45,23 @@
             font-size: 80%;
             max-width: 100px;
         }
+        #discoButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -68,6 +86,8 @@
 <div id="madeBy">
     Made by <input type="text" id="madeByInput" oninput="limitInputLength('madeByInput', 10)" placeholder="Your Name">
 </div>
+<!-- Disco Button -->
+<button id="discoButton" onclick="toggleDiscoMode()">Disco Mode</button>
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -114,6 +134,29 @@
         var madeByInput = document.getElementById('madeByInput').value;
         var madeByElement = document.getElementById('madeBy');
         madeByElement.innerHTML = 'Made by ' + madeByInput;
+    }
+
+    // Function to change the background color every 1.5 seconds
+    const colors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF3333', '#33FFF3'];
+    let colorIndex = 0;
+    let discoInterval;
+
+    function changeBackgroundColor() {
+        document.body.style.backgroundColor = colors[colorIndex];
+        colorIndex = (colorIndex + 1) % colors.length;
+    }
+
+    function toggleDiscoMode() {
+        const discoButton = document.getElementById('discoButton');
+        if (discoInterval) {
+            clearInterval(discoInterval);
+            discoInterval = null;
+            document.body.style.backgroundColor = 'violet';
+            discoButton.textContent = 'Disco Mode';
+        } else {
+            discoInterval = setInterval(changeBackgroundColor, 1500);
+            discoButton.textContent = 'Stop Disco';
+        }
     }
 </script>
 </body>
