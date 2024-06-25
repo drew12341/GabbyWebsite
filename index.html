@@ -61,21 +61,6 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            z-index: 1000;
-        }
-        .cat-images {
-            position: fixed;
-            bottom: 140px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 999;
-        }
-        .cat-images img {
-            width: 100px;
-            height: auto;
-            border-radius: 10%;
         }
     </style>
 </head>
@@ -100,12 +85,6 @@
 <!-- Made by input -->
 <div id="madeBy">
     Made by <input type="text" id="madeByInput" oninput="limitInputLength('madeByInput', 10)" placeholder="Your Name">
-</div>
-<!-- Cat Images -->
-<div class="cat-images">
-    <img src="https://placekitten.com/100/100" alt="Cat 1">
-    <img src="https://placekitten.com/101/101" alt="Cat 2">
-    <img src="https://placekitten.com/102/102" alt="Cat 3">
 </div>
 <!-- Disco Button -->
 <button id="discoButton" onclick="toggleDiscoMode()">Disco Mode</button>
