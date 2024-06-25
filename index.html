@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fill in the story</title>
+    <title>Fill in the Sentence</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- Google Font: Chelsea Market -->
@@ -61,6 +61,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            z-index: 1000;
         }
     </style>
 </head>
@@ -71,11 +72,11 @@
         <button id="clearButton" onclick="clearInputs()">Clear All</button>
     </h1>
     <p class="sentence">
-        Once upon a time there was a <input type="text" class="form-control inline-input" name="firstInput" oninput="saveInput('firstInput')" value=""><br>
-        It was always <input type="text" class="form-control inline-input" name="secondInput" oninput="saveInput('secondInput')" value=""><br>
-        One day, a terrible <input type="text" class="form-control inline-input" name="thirdInput" oninput="saveInput('thirdInput')" value=""><br>
-        Charged into the <input type="text" class="form-control inline-input" name="fourthInput" oninput="saveInput('fourthInput')" value=""> and <input type="text" class="form-control inline-input" name="fifthInput" oninput="saveInput('fifthInput')" value=""> and destroyed every <input type="text" class="form-control inline-input" name="sixthInput" oninput="saveInput('sixthInput')" value="">.<br>
-        But luckily, <input type="text" class="form-control inline-input" name="seventhInput" oninput="saveInput('seventhInput')" value=""> saved every <input type="text" class="form-control inline-input" name="eighthInput" oninput="saveInput('eighthInput')" value="">.
+        Once upon a time there was a <input type="text" class="form-control inline-input" name="firstInput" placeholder="noun" oninput="saveInput('firstInput')" value=""><br>
+        It was always <input type="text" class="form-control inline-input" name="secondInput" placeholder="adjective" oninput="saveInput('secondInput')" value=""><br>
+        One day, a terrible <input type="text" class="form-control inline-input" name="thirdInput" placeholder="noun" oninput="saveInput('thirdInput')" value=""><br>
+        Charged into the <input type="text" class="form-control inline-input" name="fourthInput" placeholder="noun" oninput="saveInput('fourthInput')" value=""> and <input type="text" class="form-control inline-input" name="fifthInput" placeholder="verb" oninput="saveInput('fifthInput')" value=""> and destroyed every <input type="text" class="form-control inline-input" name="sixthInput" placeholder="noun" oninput="saveInput('sixthInput')" value="">.<br>
+        But luckily, <input type="text" class="form-control inline-input" name="seventhInput" placeholder="noun" oninput="saveInput('seventhInput')" value=""> saved every <input type="text" class="form-control inline-input" name="eighthInput" placeholder="noun" oninput="saveInput('eighthInput')" value="">.
     </p>
 </div>
 <!-- Footer -->
