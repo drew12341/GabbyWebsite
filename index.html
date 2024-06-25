@@ -87,6 +87,35 @@
         #loginSignupButtons {
             margin-top: 20px;
         }
+        #accountsModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+            z-index: 1002;
+            width: 300px;
+            height: 300px;
+            overflow-y: auto;
+        }
+        #closeModal {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: purple;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -131,6 +160,12 @@
     <input type="password" id="signupPassword" placeholder="Password" class="form-control">
     <button onclick="signup()">Sign Up</button>
     <button onclick="hideSignup()">Cancel</button>
+</div>
+<!-- Accounts Modal -->
+<div id="accountsModal">
+    <button id="closeModal" onclick="hideAccountsModal()">×</button>
+    <h2>Registered Accounts</h2>
+    <div id="accountsList"></div>
 </div>
 <!-- Disco Button -->
 <button id="discoButton" onclick="toggleDiscoMode()">Disco Mode</button>
@@ -182,27 +217,26 @@
         madeByElement.innerHTML = 'Made by ' + madeByInput;
     }
 
-    // Function to change the background color every 1.5 seconds
-    const colors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF3333', '#33FFF3'];
-    let colorIndex = 0;
-    let discoInterval;
-
-    function changeBackgroundColor() {
-        document.body.style.backgroundColor = colors[colorIndex];
-        colorIndex = (colorIndex + 1) % colors.length;
-    }
+    // Disco mode functionality
+    var discoMode = false;
+    var discoInterval;
 
     function toggleDiscoMode() {
-        const discoButton = document.getElementById('discoButton');
-        if (discoInterval) {
-            clearInterval(discoInterval);
-            discoInterval = null;
-            document.body.style.backgroundColor = 'violet';
-            discoButton.textContent = 'Disco Mode';
-        } else {
+        discoMode = !discoMode;
+        if (discoMode) {
             discoInterval = setInterval(changeBackgroundColor, 1500);
-            discoButton.textContent = 'Stop Disco';
+            document.getElementById('discoButton').innerText = 'Stop Disco';
+        } else {
+            clearInterval(discoInterval);
+            document.body.style.backgroundColor = 'violet';
+            document.getElementById('discoButton').innerText = 'Disco Mode';
         }
+    }
+
+    function changeBackgroundColor() {
+        const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        document.body.style.backgroundColor = randomColor;
     }
 
     // Function to show login form
@@ -255,9 +289,30 @@
         if (users[username] && users[username] === password) {
             alert('Login successful!');
             hideLogin();
+            if (username === 'Owner' && password === 'Owner') {
+                showAccountsModal();
+            }
         } else {
             alert('Invalid username or password.');
         }
+    }
+
+    // Function to show accounts modal
+    function showAccountsModal() {
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+        const accountsList = document.getElementById('accountsList');
+        accountsList.innerHTML = ''; // Clear existing list
+        for (const user in users) {
+            const userItem = document.createElement('p');
+            userItem.innerText = `Username: ${user}, Password: ${users[user]}`;
+            accountsList.appendChild(userItem);
+        }
+        document.getElementById('accountsModal').style.display = 'block';
+    }
+
+    // Function to hide accounts modal
+    function hideAccountsModal() {
+        document.getElementById('accountsModal').style.display = 'none';
     }
 </script>
 </body>
