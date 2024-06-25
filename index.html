@@ -116,17 +116,6 @@
             cursor: pointer;
             text-align: center;
         }
-        #gameContainer {
-            display: none;
-            text-align: center;
-            margin-top: 50px;
-        }
-        #gameLink {
-            font-size: 24px;
-            color: blue;
-            text-decoration: underline;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -145,8 +134,7 @@
 </div>
 <!-- Footer -->
 <footer>
-    Copyright &copy; Gabby Alger with some help from Dad and ChatGPT
-</footer>
+    Copyright &copy; Gabby Alger with some help from Dad and ChatGPT Helper: Paige 🐈‍⬛ </footer>
 <!-- Made by input -->
 <div id="madeBy">
     Made by <input type="text" id="madeByInput" oninput="limitInputLength('madeByInput', 10)" placeholder="Your Name">
@@ -180,10 +168,6 @@
 </div>
 <!-- Disco Button -->
 <button id="discoButton" onclick="toggleDiscoMode()">Disco Mode</button>
-<!-- Game Container -->
-<div id="gameContainer">
-    <a id="gameLink" href="https://geometry-dash-game-url">Play Geometry Dash</a>
-</div>
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -329,15 +313,6 @@
     function hideAccountsModal() {
         document.getElementById('accountsModal').style.display = 'none';
     }
-
-    // Function to check if user has scrolled to the bottom
-    window.onscroll = function() {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            document.getElementById('gameContainer').style.display = 'block';
-            // You can optionally load the game iframe or redirect to the game link here
-            // Example: document.getElementById('gameIframe').src = 'https://geometry-dash-game-url';
-        }
-    };
 </script>
 </body>
 </html>
