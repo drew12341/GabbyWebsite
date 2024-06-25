@@ -205,34 +205,59 @@
         }
     }
 
-    // Show login form
+    // Function to show login form
     function showLogin() {
         document.getElementById('loginContainer').style.display = 'block';
     }
 
-    // Hide login form
+    // Function to hide login form
     function hideLogin() {
         document.getElementById('loginContainer').style.display = 'none';
     }
 
-    // Show signup form
+    // Function to show signup form
     function showSignup() {
         document.getElementById('signupContainer').style.display = 'block';
     }
 
-    // Hide signup form
+    // Function to hide signup form
     function hideSignup() {
         document.getElementById('signupContainer').style.display = 'none';
     }
 
-    // Mock login function
-    function login() {
-        alert('Login function not implemented.');
+    // Function to handle user signup
+    function signup() {
+        const username = document.getElementById('signupUsername').value;
+        const password = document.getElementById('signupPassword').value;
+
+        if (username && password) {
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            if (users[username]) {
+                alert('Username already exists.');
+            } else {
+                users[username] = password;
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('Signup successful!');
+                hideSignup();
+            }
+        } else {
+            alert('Please enter a username and password.');
+        }
     }
 
-    // Mock signup function
-    function signup() {
-        alert('Signup function not implemented.');
+    // Function to handle user login
+    function login() {
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+
+        if (users[username] && users[username] === password) {
+            alert('Login successful!');
+            hideLogin();
+        } else {
+            alert('Invalid username or password.');
+        }
     }
 </script>
 </body>
