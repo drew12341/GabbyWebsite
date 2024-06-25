@@ -63,6 +63,30 @@
             text-align: center;
             z-index: 1000;
         }
+        #loginContainer, #signupContainer {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+            z-index: 1001;
+        }
+        #loginContainer h2, #signupContainer h2 {
+            margin-bottom: 20px;
+        }
+        #loginContainer input, #signupContainer input {
+            margin-bottom: 10px;
+        }
+        #loginContainer button, #signupContainer button {
+            margin-top: 10px;
+        }
+        #loginSignupButtons {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -86,6 +110,27 @@
 <!-- Made by input -->
 <div id="madeBy">
     Made by <input type="text" id="madeByInput" oninput="limitInputLength('madeByInput', 10)" placeholder="Your Name">
+</div>
+<!-- Login and Signup Buttons -->
+<div id="loginSignupButtons">
+    <button onclick="showLogin()">Log In</button>
+    <button onclick="showSignup()">Sign Up</button>
+</div>
+<!-- Login Form -->
+<div id="loginContainer">
+    <h2>Login</h2>
+    <input type="text" id="loginUsername" placeholder="Username" class="form-control">
+    <input type="password" id="loginPassword" placeholder="Password" class="form-control">
+    <button onclick="login()">Login</button>
+    <button onclick="hideLogin()">Cancel</button>
+</div>
+<!-- Signup Form -->
+<div id="signupContainer">
+    <h2>Sign Up</h2>
+    <input type="text" id="signupUsername" placeholder="Username" class="form-control">
+    <input type="password" id="signupPassword" placeholder="Password" class="form-control">
+    <button onclick="signup()">Sign Up</button>
+    <button onclick="hideSignup()">Cancel</button>
 </div>
 <!-- Disco Button -->
 <button id="discoButton" onclick="toggleDiscoMode()">Disco Mode</button>
@@ -159,6 +204,4 @@
             discoButton.textContent = 'Stop Disco';
         }
     }
-</script>
-</body>
-</html>
+
