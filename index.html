@@ -134,10 +134,27 @@
 </div>
 <!-- Footer -->
 <footer>
-    Copyright &copy; Gabby Alger with some help from Dad and ChatGPT Helper: Paige 🐈‍⬛ </footer>
+    Copyright &copy; Gabby Alger with some help from Dad and ChatGPT Helper: Paige 🐈‍⬛ 
+</footer>
 <!-- Made by input -->
 <div id="madeBy">
     Made by <input type="text" id="madeByInput" oninput="limitInputLength('madeByInput', 10)" placeholder="Your Name">
+</div>
+<!-- Additional Stories -->
+<div class="container mt-5">
+    <h2>Change the Story</h2>
+    <div class="story">
+        <p class="sentence">
+            The <input type="text" class="form-control inline-input" name="story1Input1" placeholder="noun" oninput="saveInput('story1Input1')" value=""> was very <input type="text" class="form-control inline-input" name="story1Input2" placeholder="adjective" oninput="saveInput('story1Input2')" value=""> because it <input type="text" class="form-control inline-input" name="story1Input3" placeholder="verb" oninput="saveInput('story1Input3')" value=""> all day.<br>
+            Suddenly, a <input type="text" class="form-control inline-input" name="story1Input4" placeholder="noun" oninput="saveInput('story1Input4')" value=""> appeared and <input type="text" class="form-control inline-input" name="story1Input5" placeholder="verb" oninput="saveInput('story1Input5')" value=""> the <input type="text" class="form-control inline-input" name="story1Input6" placeholder="noun" oninput="saveInput('story1Input6')" value="">.<br>
+        </p>
+    </div>
+    <div class="story">
+        <p class="sentence">
+            In a distant <input type="text" class="form-control inline-input" name="story2Input1" placeholder="noun" oninput="saveInput('story2Input1')" value="">, there lived a <input type="text" class="form-control inline-input" name="story2Input2" placeholder="adjective" oninput="saveInput('story2Input2')" value=""> <input type="text" class="form-control inline-input" name="story2Input3" placeholder="noun" oninput="saveInput('story2Input3')" value="">.<br>
+            Every day, the <input type="text" class="form-control inline-input" name="story2Input4" placeholder="noun" oninput="saveInput('story2Input4')" value=""> would <input type="text" class="form-control inline-input" name="story2Input5" placeholder="verb" oninput="saveInput('story2Input5')" value=""> and <input type="text" class="form-control inline-input" name="story2Input6" placeholder="verb" oninput="saveInput('story2Input6')" value=""> until nightfall.<br>
+        </p>
+    </div>
 </div>
 <!-- Login and Signup Buttons -->
 <div id="loginSignupButtons">
@@ -181,7 +198,9 @@
 
     // Function to clear all input values
     function clearInputs() {
-        var inputNames = ['firstInput', 'secondInput', 'thirdInput', 'fourthInput', 'fifthInput', 'sixthInput', 'seventhInput', 'eighthInput'];
+        var inputNames = ['firstInput', 'secondInput', 'thirdInput', 'fourthInput', 'fifthInput', 'sixthInput', 'seventhInput', 'eighthInput',
+                          'story1Input1', 'story1Input2', 'story1Input3', 'story1Input4', 'story1Input5', 'story1Input6',
+                          'story2Input1', 'story2Input2', 'story2Input3', 'story2Input4', 'story2Input5', 'story2Input6'];
 
         inputNames.forEach(function (inputName) {
             document.getElementsByName(inputName)[0].value = '';
@@ -191,7 +210,9 @@
 
     // Function to load input values from localStorage on page load
     window.onload = function () {
-        var inputNames = ['firstInput', 'secondInput', 'thirdInput', 'fourthInput', 'fifthInput', 'sixthInput', 'seventhInput', 'eighthInput'];
+        var inputNames = ['firstInput', 'secondInput', 'thirdInput', 'fourthInput', 'fifthInput', 'sixthInput', 'seventhInput', 'eighthInput',
+                          'story1Input1', 'story1Input2', 'story1Input3', 'story1Input4', 'story1Input5', 'story1Input6',
+                          'story2Input1', 'story2Input2', 'story2Input3', 'story2Input4', 'story2Input5', 'story2Input6'];
 
         inputNames.forEach(function (inputName) {
             var storedValue = localStorage.getItem(inputName);
