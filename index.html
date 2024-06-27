@@ -87,35 +87,6 @@
         #loginSignupButtons {
             margin-top: 20px;
         }
-        #accountsModal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border: 2px solid black;
-            border-radius: 10px;
-            z-index: 1002;
-            width: 300px;
-            height: 300px;
-            overflow-y: auto;
-        }
-        #closeModal {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: purple;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            text-align: center;
-        }
         #gameContainer {
             display: none;
             margin-top: 20px;
@@ -175,3 +146,104 @@
 </div>
 <!-- Signup Form -->
 <div id="signupContainer">
+    <h2>Sign Up</h2>
+    <input type="text" id="signupUsername" placeholder="Username" class="form-control">
+    <input type="password" id="signupPassword" placeholder="Password" class="form-control">
+    <button onclick="signup()">Sign Up</button>
+    <button onclick="hideSignup()">Cancel</button>
+</div>
+<!-- Game Container -->
+<div id="gameContainer">
+    <h2>Geometry Dash</h2>
+    <canvas id="gameCanvas" width="600" height="400" style="border:1px solid black;"></canvas>
+</div>
+<script>
+    let loggedInUser = null;
+    const users = {};
+
+    function showLogin() {
+        document.getElementById('loginContainer').style.display = 'block';
+    }
+
+    function hideLogin() {
+        document.getElementById('loginContainer').style.display = 'none';
+    }
+
+    function showSignup() {
+        document.getElementById('signupContainer').style.display = 'block';
+    }
+
+    function hideSignup() {
+        document.getElementById('signupContainer').style.display = 'none';
+    }
+
+    function login() {
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+
+        if (users[username] && users[username] === password) {
+            loggedInUser = username;
+            alert('Login successful!');
+            hideLogin();
+            showGame();
+        } else {
+            alert('Invalid username or password');
+        }
+    }
+
+    function signup() {
+        const username = document.getElementById('signupUsername').value;
+        const password = document.getElementById('signupPassword').value;
+
+        if (users[username]) {
+            alert('Username already taken');
+        } else {
+            users[username] = password;
+            alert('Signup successful!');
+            hideSignup();
+        }
+    }
+
+    function showGame() {
+        if (loggedInUser) {
+            document.getElementById('gameContainer').style.display = 'block';
+            startGame();
+        }
+    }
+
+    function startGame() {
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let x = canvas.width / 2;
+        let y = canvas.height - 30;
+        const dx = 2;
+        const dy = -2;
+        const ballRadius = 10;
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            x += dx;
+            y += dy;
+
+            if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+                dx = -dx;
+            }
+            if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+                dy = -dy;
+            }
+        }
+
+        setInterval(draw, 10);
+    }
+</script>
+</body>
+</html>
