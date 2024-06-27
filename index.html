@@ -116,14 +116,9 @@
             cursor: pointer;
             text-align: center;
         }
-        /* Game Styles */
         #gameContainer {
-            margin-top: 50px;
-            text-align: center;
-        }
-        canvas {
-            border: 1px solid black;
-            background-color: white;
+            display: none;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -180,122 +175,3 @@
 </div>
 <!-- Signup Form -->
 <div id="signupContainer">
-    <h2>Sign Up</h2>
-    <input type="text" id="signupUsername" placeholder="Username" class="form-control">
-    <input type="password" id="signupPassword" placeholder="Password" class="form-control">
-    <button onclick="signup()">Sign Up</button>
-    <button onclick="hideSignup()">Cancel</button>
-</div>
-<!-- Disco Button -->
-<button id="discoButton" onclick="startDisco()">Dance Party</button>
-<!-- Accounts Modal -->
-<div id="accountsModal">
-    <button id="closeModal" onclick="hideAccountsModal()">X</button>
-    <h2>Accounts</h2>
-    <ul id="accountsList"></ul>
-</div>
-<!-- Game Container -->
-<div id="gameContainer">
-    <h2>Simple Geometry Dash</h2>
-    <canvas id="gameCanvas" width="600" height="200"></canvas>
-</div>
-<!-- JavaScript -->
-<script>
-    // Existing JavaScript code ...
-
-    // Geometry Dash game logic
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    let player = { x: 50, y: 150, width: 20, height: 20, dy: 0, gravity: 0.5, jump: -10 };
-    let obstacles = [];
-    let frames = 0;
-    let gameOver = false;
-
-    function drawPlayer() {
-        ctx.fillStyle = 'red';
-        ctx.fillRect(player.x, player.y, player.width, player.height);
-    }
-
-    function drawObstacles() {
-        ctx.fillStyle = 'black';
-        obstacles.forEach(obstacle => {
-            ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-        });
-    }
-
-    function updatePlayer() {
-        player.dy += player.gravity;
-        player.y += player.dy;
-        if (player.y + player.height > canvas.height) {
-            player.y = canvas.height - player.height;
-            player.dy = 0;
-        }
-    }
-
-    function createObstacle() {
-        const width = 20;
-        const height = Math.random() * (canvas.height - 50) + 50;
-        const x = canvas.width;
-        const y = canvas.height - height;
-        obstacles.push({ x, y, width, height });
-    }
-
-    function updateObstacles() {
-        obstacles.forEach(obstacle => {
-            obstacle.x -= 5;
-        });
-        obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
-        if (frames % 100 === 0) createObstacle();
-    }
-
-    function detectCollision() {
-        obstacles.forEach(obstacle => {
-            if (
-                player.x < obstacle.x + obstacle.width &&
-                player.x + player.width > obstacle.x &&
-                player.y < obstacle.y + obstacle.height &&
-                player.y + player.height > obstacle.y
-            ) {
-                gameOver = true;
-            }
-        });
-    }
-
-    function gameLoop() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (!gameOver) {
-            frames++;
-            drawPlayer();
-            drawObstacles();
-            updatePlayer();
-            updateObstacles();
-            detectCollision();
-            requestAnimationFrame(gameLoop);
-        } else {
-            ctx.fillStyle = 'black';
-            ctx.font = '30px Chelsea Market';
-            ctx.fillText('Game Over', canvas.width / 2 - 75, canvas.height / 2);
-        }
-    }
-
-    canvas.addEventListener('click', () => {
-        if (!gameOver) {
-            player.dy = player.jump;
-        } else {
-            resetGame();
-        }
-    });
-
-    function resetGame() {
-        player.y = 150;
-        player.dy = 0;
-        obstacles = [];
-        frames = 0;
-        gameOver = false;
-        gameLoop();
-    }
-
-    gameLoop();
-</script>
-</body>
-</html>
