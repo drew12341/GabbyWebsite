@@ -84,9 +84,6 @@
         #loginContainer button, #signupContainer button {
             margin-top: 10px;
         }
-        #loginSignupButtons {
-            margin-top: 20px;
-        }
         #gameContainer {
             display: none;
             margin-top: 20px;
@@ -238,7 +235,8 @@
         }
 
         function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white'; // Set background color to white
+            ctx.fillRect(0, 0, canvas.width, canvas.height); // Clear canvas with white background
 
             for (let i = 0; i < snake.length; i++) {
                 ctx.fillStyle = (i === 0) ? 'green' : 'white';
