@@ -152,11 +152,6 @@
     <button onclick="signup()">Sign Up</button>
     <button onclick="hideSignup()">Cancel</button>
 </div>
-<!-- Game Container -->
-<div id="gameContainer">
-    <h2>Snake Game</h2>
-    <canvas id="gameCanvas" width="400" height="400" style="border:1px solid black;"></canvas>
-</div>
 <script>
     let loggedInUser = null;
     const users = {};
@@ -183,11 +178,11 @@
 
         if (users[username] && users[username] === password) {
             loggedInUser = username;
-            alert('Login successful!');
+            alert('Login successful');
             hideLogin();
-            showGame();
+            document.getElementById('gameContainer').style.display = 'block';
         } else {
-            alert('Invalid username or password');
+            alert('Incorrect username or password');
         }
     }
 
@@ -195,101 +190,40 @@
         const username = document.getElementById('signupUsername').value;
         const password = document.getElementById('signupPassword').value;
 
-        if (users[username]) {
-            alert('Username already taken');
-        } else {
+        if (!users[username]) {
             users[username] = password;
-            alert('Signup successful!');
+            alert('Signup successful');
             hideSignup();
+        } else {
+            alert('Username already exists');
         }
     }
 
-    function showGame() {
-        if (loggedInUser) {
-            document.getElementById('gameContainer').style.display = 'block';
-            startGame();
+    function clearInputs() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(input => input.value = '');
+    }
+
+    function saveInput(inputName) {
+        localStorage.setItem(inputName, document.querySelector(`[name="${inputName}"]`).value);
+    }
+
+    function limitInputLength(inputId, maxLength) {
+        const input = document.getElementById(inputId);
+        if (input.value.length > maxLength) {
+            input.value = input.value.slice(0, maxLength);
         }
     }
 
-    function startGame() {
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const box = 20;
-        let snake = [];
-        snake[0] = { x: 9 * box, y: 10 * box };
-        let direction;
-        let food = {
-            x: Math.floor(Math.random() * 19 + 1) * box,
-            y: Math.floor(Math.random() * 19 + 1) * box
-        };
-
-        document.addEventListener('keydown', setDirection);
-
-        function setDirection(event) {
-            if (event.keyCode === 37 && direction !== 'RIGHT') {
-                direction = 'LEFT';
-            } else if (event.keyCode === 38 && direction !== 'DOWN') {
-                direction = 'UP';
-            } else if (event.keyCode === 39 && direction !== 'LEFT') {
-                direction = 'RIGHT';
-            } else if (event.keyCode === 40 && direction !== 'UP') {
-                direction = 'DOWN';
+    window.onload = function() {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(input => {
+            const savedValue = localStorage.getItem(input.name);
+            if (savedValue) {
+                input.value = savedValue;
             }
-        }
-
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (let i = 0; i < snake.length; i++) {
-                ctx.fillStyle = (i === 0) ? 'green' : 'white';
-                ctx.fillRect(snake[i].x, snake[i].y, box, box);
-                ctx.strokeStyle = 'red';
-                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
-            }
-
-            ctx.fillStyle = 'red';
-            ctx.fillRect(food.x, food.y, box, box);
-
-            let snakeX = snake[0].x;
-            let snakeY = snake[0].y;
-
-            if (direction === 'LEFT') snakeX -= box;
-            if (direction === 'UP') snakeY -= box;
-            if (direction === 'RIGHT') snakeX += box;
-            if (direction === 'DOWN') snakeY += box;
-
-            if (snakeX === food.x && snakeY === food.y) {
-                food = {
-                    x: Math.floor(Math.random() * 19 + 1) * box,
-                    y: Math.floor(Math.random() * 19 + 1) * box
-                };
-            } else {
-                snake.pop();
-            }
-
-            let newHead = { x: snakeX, y: snakeY };
-
-            if (snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || collision(newHead, snake)) {
-                clearInterval(game);
-                alert('Game Over');
-                document.getElementById('gameContainer').style.display = 'none';
-                loggedInUser = null;
-            }
-
-            snake.unshift(newHead);
-        }
-
-        function collision(head, array) {
-            for (let i = 0; i < array.length; i++) {
-                if (head.x === array[i].x && head.y === array[i].y) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        let game = setInterval(draw, 100);
-    }
+        });
+    };
 </script>
 </body>
 </html>
