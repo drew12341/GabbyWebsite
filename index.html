@@ -226,4 +226,73 @@
     };
 </script>
 </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... (previous head content remains the same) ... -->
+    <style>
+        /* ... (previous styles remain the same) ... */
+        
+        /* Add this new style for the custom cursor */
+        .custom-cursor {
+            cursor: url('/api/placeholder/32/32'), auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- ... (previous body content remains the same) ... -->
+    
+    <script>
+        let loggedInUser = null;
+        const users = {};
+
+        function showLogin() {
+            document.getElementById('loginContainer').style.display = 'block';
+        }
+
+        function hideLogin() {
+            document.getElementById('loginContainer').style.display = 'none';
+        }
+
+        function showSignup() {
+            document.getElementById('signupContainer').style.display = 'block';
+        }
+
+        function hideSignup() {
+            document.getElementById('signupContainer').style.display = 'none';
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (users[username] && users[username] === password) {
+                loggedInUser = username;
+                alert('Login successful');
+                hideLogin();
+                document.getElementById('gameContainer').style.display = 'block';
+                
+                // Add the custom cursor class to the body
+                document.body.classList.add('custom-cursor');
+            } else {
+                alert('Incorrect username or password');
+            }
+        }
+
+        function signup() {
+            const username = document.getElementById('signupUsername').value;
+            const password = document.getElementById('signupPassword').value;
+
+            if (!users[username]) {
+                users[username] = password;
+                alert('Signup successful');
+                hideSignup();
+            } else {
+                alert('Username already exists');
+            }
+        }
+
+        // ... (rest of the JavaScript remains the same) ...
+    </script>
+</body>
 </html>
