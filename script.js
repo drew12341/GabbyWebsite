@@ -17,6 +17,37 @@ const WELCOME_CONFIG = {
 let loggedInUser = null;
 let users = JSON.parse(localStorage.getItem('users')) || {};
 
+function logout() {
+    loggedInUser = null;
+    updateMadeByIcon();
+    document.getElementById('madeByInput').value = 'Guest';
+}
+
+function updateMadeByIcon() {
+    const userIcon = document.querySelector('.user-icon');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const loginBtn = document.getElementById('showLoginBtn');
+    const signupBtn = document.getElementById('showSignupBtn');
+    
+    if (!userIcon) return;
+    
+    if (loggedInUser) {
+        userIcon.style.display = 'inline-flex';
+        const savedIcon = getUserIcon(loggedInUser) || 'cat';
+        updateUserIcon(savedIcon);
+        document.getElementById('madeByInput').value = loggedInUser;
+        logoutBtn.style.display = 'inline-block';
+        loginBtn.style.display = 'none';
+        signupBtn.style.display = 'none';
+    } else {
+        userIcon.style.display = 'none';
+        document.getElementById('madeByInput').value = 'Guest';
+        logoutBtn.style.display = 'none';
+        loginBtn.style.display = 'inline-block';
+        signupBtn.style.display = 'inline-block';
+    }
+}
+
 // Confetti Animation
 function createConfetti() {
     for (let i = 0; i < CONFETTI_CONFIG.count; i++) {
@@ -126,10 +157,10 @@ function login() {
         hideLogin();
         clearAuthInputs('login');
         showWelcomeMessage();
-        
-        // Load and display user's saved icon
-        const savedIcon = getUserIcon(username);
-        updateUserIcon(savedIcon);
+        updateMadeByIcon();
+        document.getElementById('showLoginBtn').style.display = 'none';
+        document.getElementById('showSignupBtn').style.display = 'none';
+        document.getElementById('logoutBtn').style.display = 'inline-block';
         
         setTimeout(() => {
             showIconSelector();
@@ -240,9 +271,8 @@ function searchInputs(searchTerm) {
 
 // Initialize Application
 function initializeApp() {
-    // Set default icon
-    const defaultIcon = 'cat';
-    updateUserIcon(defaultIcon);
+    // Initialize icon visibility
+    updateMadeByIcon();
     
     // Set up icon selection
     const iconOptions = document.querySelectorAll('.icon-option');
@@ -272,6 +302,7 @@ function initializeApp() {
     document.getElementById('hideLoginBtn').addEventListener('click', hideLogin);
     document.getElementById('showSignupBtn').addEventListener('click', showSignup);
     document.getElementById('hideSignupBtn').addEventListener('click', hideSignup);
+    document.getElementById('logoutBtn')?.addEventListener('click', logout);
     
     // Set up login/signup form submissions
     document.getElementById('loginBtn').addEventListener('click', login);
