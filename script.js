@@ -169,9 +169,13 @@ function saveInput(inputName) {
 function loadSavedInputs() {
     const inputs = document.querySelectorAll('input[type="text"]');
     inputs.forEach(input => {
-        const savedValue = localStorage.getItem(input.name);
-        if (savedValue) {
-            input.value = savedValue;
+        if (input.id === 'madeByInput') {
+            input.value = 'Guest';
+        } else {
+            const savedValue = localStorage.getItem(input.name);
+            if (savedValue) {
+                input.value = savedValue;
+            }
         }
     });
 }
@@ -286,7 +290,9 @@ function initializeApp() {
 
     const storyInputs = document.querySelectorAll('.inline-input');
     storyInputs.forEach(input => {
-        input.addEventListener('input', () => saveInput(input.name));
+        if (input.id !== 'madeByInput') {
+            input.addEventListener('input', () => saveInput(input.name));
+        }
     });
 
     // Load saved inputs
