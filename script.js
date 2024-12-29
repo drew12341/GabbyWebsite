@@ -166,13 +166,20 @@ function searchInputs(searchTerm) {
     
     // Search and highlight matches
     let found = false;
+    let firstMatch = null;
     allInputs.forEach(input => {
         if (input.value.toLowerCase().includes(searchTerm.toLowerCase())) {
             input.style.backgroundColor = '#fef9c3'; // Light yellow highlight
             input.style.borderColor = '#eab308'; // Yellow border
+            if (!firstMatch) firstMatch = input;
             found = true;
         }
     });
+
+    // Scroll to first match if found
+    if (firstMatch) {
+        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
     
     // Show feedback if no matches found
     if (!found) {
