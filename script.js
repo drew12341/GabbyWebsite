@@ -85,8 +85,16 @@ function selectIcon(iconName) {
         }
     });
     
-    // Save selection
+    // Save selection and update display
     saveUserIcon(loggedInUser, iconName);
+    updateUserIcon(iconName);
+}
+
+function updateUserIcon(iconName) {
+    const userIcon = document.getElementById('userIcon');
+    if (userIcon) {
+        userIcon.src = `images/${iconName}.svg`;
+    }
 }
 
 // Auth UI Functions
@@ -118,6 +126,11 @@ function login() {
         hideLogin();
         clearAuthInputs('login');
         showWelcomeMessage();
+        
+        // Load and display user's saved icon
+        const savedIcon = getUserIcon(username);
+        updateUserIcon(savedIcon);
+        
         setTimeout(() => {
             showIconSelector();
         }, WELCOME_CONFIG.displayTime + 100);
@@ -223,6 +236,10 @@ function searchInputs(searchTerm) {
 
 // Initialize Application
 function initializeApp() {
+    // Set default icon
+    const defaultIcon = 'cat';
+    updateUserIcon(defaultIcon);
+    
     // Set up icon selection
     const iconOptions = document.querySelectorAll('.icon-option');
     iconOptions.forEach(option => {
