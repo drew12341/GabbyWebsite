@@ -58,6 +58,37 @@ function showWelcomeMessage() {
     }, WELCOME_CONFIG.displayTime);
 }
 
+// Icon Selection Functions
+function showIconSelector() {
+    document.getElementById('iconSelector').style.display = 'block';
+    const currentIcon = getUserIcon(loggedInUser);
+    const iconOptions = document.querySelectorAll('.icon-option');
+    iconOptions.forEach(option => {
+        if (option.dataset.icon === currentIcon) {
+            option.classList.add('selected');
+        }
+    });
+}
+
+function hideIconSelector() {
+    document.getElementById('iconSelector').style.display = 'none';
+}
+
+function selectIcon(iconName) {
+    if (!loggedInUser) return;
+    
+    // Update selection UI
+    document.querySelectorAll('.icon-option').forEach(option => {
+        option.classList.remove('selected');
+        if (option.dataset.icon === iconName) {
+            option.classList.add('selected');
+        }
+    });
+    
+    // Save selection
+    saveUserIcon(loggedInUser, iconName);
+}
+
 // Auth UI Functions
 function showLogin() {
     document.getElementById('loginContainer').style.display = 'block';
@@ -87,6 +118,9 @@ function login() {
         hideLogin();
         clearAuthInputs('login');
         showWelcomeMessage();
+        setTimeout(() => {
+            showIconSelector();
+        }, WELCOME_CONFIG.displayTime + 100);
         return true;
     } else {
         alert('Incorrect username or password');
@@ -189,6 +223,15 @@ function searchInputs(searchTerm) {
 
 // Initialize Application
 function initializeApp() {
+    // Set up icon selection
+    const iconOptions = document.querySelectorAll('.icon-option');
+    iconOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            selectIcon(option.dataset.icon);
+            setTimeout(hideIconSelector, 500);
+        });
+    });
+
     // Set up search functionality
     const searchButton = document.getElementById('searchButton');
     const searchInput = document.getElementById('searchInput');

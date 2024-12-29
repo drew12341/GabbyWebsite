@@ -48,11 +48,23 @@ function setupStorageListeners() {
     });
 }
 
-// Export functions
-export {
-    saveInput,
-    loadSavedInputs,
-    clearAllInputs,
-    limitInputLength,
-    setupStorageListeners
-};
+// User Icon Functions
+function saveUserIcon(username, iconName) {
+    const userIcons = JSON.parse(localStorage.getItem('userIcons')) || {};
+    userIcons[username] = iconName;
+    localStorage.setItem('userIcons', JSON.stringify(userIcons));
+}
+
+function getUserIcon(username) {
+    const userIcons = JSON.parse(localStorage.getItem('userIcons')) || {};
+    return userIcons[username] || 'cat'; // Default to cat if no icon selected
+}
+
+// Make functions globally available
+window.saveInput = saveInput;
+window.loadSavedInputs = loadSavedInputs;
+window.clearAllInputs = clearAllInputs;
+window.limitInputLength = limitInputLength;
+window.setupStorageListeners = setupStorageListeners;
+window.saveUserIcon = saveUserIcon;
+window.getUserIcon = getUserIcon;

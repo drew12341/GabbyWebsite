@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="40" r="20" fill="#8B4513"/> <!-- head -->
+    <circle cx="40" cy="35" r="3" fill="#000"/> <!-- left eye -->
+    <circle cx="60" cy="35" r="3" fill="#000"/> <!-- right eye -->
+    <circle cx="50" cy="45" r="5" fill="#000"/> <!-- nose -->
+    <path d="M20 30 Q30 20 40 30" fill="#8B4513"/> <!-- left ear -->
+    <path d="M60 30 Q70 20 80 30" fill="#8B4513"/> <!-- right ear -->
+    <path d="M35 50 Q50 60 65 50" fill="none" stroke="#000" stroke-width="2"/> <!-- mouth -->
+</svg>
