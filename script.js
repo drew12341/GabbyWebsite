@@ -153,8 +153,49 @@ function limitInputLength(inputId, maxLength) {
     }
 }
 
+// Search functionality
+function searchInputs(searchTerm) {
+    if (!searchTerm.trim()) return;
+    
+    // Remove any previous highlights
+    const allInputs = document.querySelectorAll('.inline-input');
+    allInputs.forEach(input => {
+        input.style.backgroundColor = '';
+        input.style.borderColor = '';
+    });
+    
+    // Search and highlight matches
+    let found = false;
+    allInputs.forEach(input => {
+        if (input.value.toLowerCase().includes(searchTerm.toLowerCase())) {
+            input.style.backgroundColor = '#fef9c3'; // Light yellow highlight
+            input.style.borderColor = '#eab308'; // Yellow border
+            found = true;
+        }
+    });
+    
+    // Show feedback if no matches found
+    if (!found) {
+        alert('No matches found for: ' + searchTerm);
+    }
+}
+
 // Initialize Application
 function initializeApp() {
+    // Set up search functionality
+    const searchButton = document.getElementById('searchButton');
+    const searchInput = document.getElementById('searchInput');
+    
+    searchButton.addEventListener('click', () => {
+        searchInputs(searchInput.value);
+    });
+    
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            searchInputs(searchInput.value);
+        }
+    });
+    
     // Set up auth event listeners
     document.getElementById('showLoginBtn').addEventListener('click', showLogin);
     document.getElementById('hideLoginBtn').addEventListener('click', hideLogin);
