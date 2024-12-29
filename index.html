@@ -158,7 +158,7 @@
 </div>
 <script>
     let loggedInUser = null;
-    const users = {};
+    let users = JSON.parse(localStorage.getItem('users')) || {};
 
     function showLogin() {
         document.getElementById('loginContainer').style.display = 'block';
@@ -179,6 +179,9 @@
     function login() {
         const username = document.getElementById('loginUsername').value;
         const password = document.getElementById('loginPassword').value;
+        
+        // Get latest users data from localStorage
+        users = JSON.parse(localStorage.getItem('users')) || {};
 
         if (users[username] && users[username] === password) {
             loggedInUser = username;
@@ -196,8 +199,13 @@
         const username = document.getElementById('signupUsername').value;
         const password = document.getElementById('signupPassword').value;
 
+        // Get latest users data from localStorage
+        users = JSON.parse(localStorage.getItem('users')) || {};
+
         if (!users[username]) {
             users[username] = password;
+            // Save updated users to localStorage
+            localStorage.setItem('users', JSON.stringify(users));
             alert('Signup successful');
             hideSignup();
         } else {
