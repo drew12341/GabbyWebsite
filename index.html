@@ -25,6 +25,7 @@
             padding: 0;
             margin: 0;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
@@ -191,6 +192,52 @@
             transform: translateY(-2px);
         }
 
+        /* Welcome Animation */
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-20px); }
+            100% { transform: translate(-50%, -50%) translateY(0px); }
+        }
+
+        @keyframes rainbow {
+            0% { color: #ff0000; }
+            20% { color: #ff9900; }
+            40% { color: #33cc33; }
+            60% { color: #3399ff; }
+            80% { color: #cc33ff; }
+            100% { color: #ff0000; }
+        }
+
+        #welcomeMessage {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 1001;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        #welcomeMessage h2 {
+            animation: rainbow 5s linear infinite;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            pointer-events: none;
+            opacity: 0;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -270,6 +317,12 @@
     </div>
 </div>
 
+<!-- Welcome Message -->
+<div id="welcomeMessage">
+    <h2>🌟 Welcome Back! 🌟</h2>
+    <p style="font-size: 1.5rem;">Time to create some awesome stories! 🚀✨</p>
+</div>
+
 <footer>
     Copyright &copy; Gabby Alger with some help from Dad and ChatGPT Helper: Paige 🐈‍⬛ 
 </footer>
@@ -277,6 +330,43 @@
 <script>
     let loggedInUser = null;
     let users = JSON.parse(localStorage.getItem('users')) || {};
+
+    function createConfetti() {
+        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+        const confettiCount = 150; // Increased confetti count
+        
+        for (let i = 0; i < confettiCount; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = -10 + 'px';
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            document.body.appendChild(confetti);
+
+            // Animation with wider spread
+            const animation = confetti.animate([
+                { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+                { transform: `translate(${Math.random() * 400 - 200}px, ${window.innerHeight + 10}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+            ], {
+                duration: Math.random() * 3000 + 2000, // Longer duration
+                easing: 'cubic-bezier(.37,0,.63,1)'
+            });
+
+            animation.onfinish = () => confetti.remove();
+        }
+    }
+
+    function showWelcomeMessage() {
+        const welcomeMsg = document.getElementById('welcomeMessage');
+        welcomeMsg.style.display = 'block';
+        createConfetti();
+
+        // Hide welcome message after 4 seconds
+        setTimeout(() => {
+            welcomeMsg.style.display = 'none';
+        }, 4000);
+    }
 
     function showLogin() {
         document.getElementById('loginContainer').style.display = 'block';
@@ -302,10 +392,10 @@
 
         if (users[username] && users[username] === password) {
             loggedInUser = username;
-            alert('Login successful');
             hideLogin();
             document.getElementById('loginUsername').value = '';
             document.getElementById('loginPassword').value = '';
+            showWelcomeMessage();
         } else {
             alert('Incorrect username or password');
         }
@@ -347,6 +437,12 @@
     }
 
     window.onload = function() {
+        // Create a test user if it doesn't exist
+        if (!users['test']) {
+            users['test'] = 'test123';
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+        
         const inputs = document.querySelectorAll('input[type="text"]');
         inputs.forEach(input => {
             const savedValue = localStorage.getItem(input.name);
