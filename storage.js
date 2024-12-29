@@ -68,3 +68,6 @@ window.limitInputLength = limitInputLength;
 window.setupStorageListeners = setupStorageListeners;
 window.saveUserIcon = saveUserIcon;
 window.getUserIcon = getUserIcon;
+
+// Initialize storage listeners when DOM is loaded
+document.addEventListener('DOMContentLoaded', setupStorageListeners);
