@@ -6,156 +6,274 @@
     <title>Fill in the Sentence</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- Google Font: Chelsea Market -->
-    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Chelsea Market', cursive;
-            font-size: 120%;
-            background-color: violet;
-            border: 2px solid black;
-            padding: 10px;
-            transition: background-color 1.5s;
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #4f46e5;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+            --border-radius: 12px;
         }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 2rem;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-weight: 500;
+            color: var(--secondary-color);
+            margin: 2rem 0;
+            font-size: 1.8rem;
+        }
+
+        .sentence {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 1.5rem;
+            line-height: 2;
+        }
+
         .inline-input {
             display: inline-block;
             width: 150px;
-            margin: 0 5px;
-            vertical-align: middle;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
         }
-        .sentence {
-            line-height: 2.5;
+
+        .inline-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            outline: none;
         }
-        footer {
-            margin-right: 20px;
-        }
-        #clearButton {
-            background-color: yellow;
-            color: black;
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s ease;
             border: none;
-            padding: 3px 5px;
             cursor: pointer;
-            font-size: 80%;
         }
-        #madeBy {
-            color: black;
-            margin-top: 20px;
-        }
-        #madeByInput {
-            font-size: 80%;
-            max-width: 100px;
-        }
-        #discoButton {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: black;
+
+        .btn-primary {
+            background-color: var(--primary-color);
             color: white;
-            border: none;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            z-index: 1000;
         }
-        #loginContainer, #signupContainer {
-            display: none;
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        #clearButton {
+            background-color: #f1f5f9;
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            margin-left: 1rem;
+            font-size: 0.9rem;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #clearButton:hover {
+            background-color: #e2e8f0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            margin-top: 3rem;
+            box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        #madeBy {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        #madeByInput {
+            font-size: 1rem;
+            max-width: 150px;
+            padding: 0.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+        }
+
+        #madeByInput:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            outline: none;
+        }
+
+        .auth-container {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border: 1px solid black;
-            border-radius: 10px;
-            z-index: 1001;
-        }
-        #loginContainer h2, #signupContainer h2 {
-            margin-bottom: 20px;
-        }
-        #loginContainer input, #signupContainer input {
-            margin-bottom: 10px;
-        }
-        #loginContainer button, #signupContainer button {
-            margin-top: 10px;
-        }
-        #loginSignupButtons {
-            margin-top: 20px;
-        }
-        #gameContainer {
+            min-width: 320px;
+            z-index: 1000;
             display: none;
-            margin-top: 20px;
         }
-        /* New style for custom cursor */
-        .custom-cursor {
-            cursor: url('/api/placeholder/32/32'), auto;
+
+        .auth-container input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+        }
+
+        .auth-container input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            outline: none;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        #loginSignupButtons {
+            text-align: center;
+            margin: 2rem 0;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .story {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .story:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .inline-input {
+                width: 120px;
+            }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-5 mb-3">
+    <h1>
         Fill in the Sentence
         <button id="clearButton" onclick="clearInputs()">Clear All</button>
     </h1>
-    <p class="sentence">
-        Once upon a time there was a <input type="text" class="form-control inline-input" name="firstInput" placeholder="noun" oninput="saveInput('firstInput')" value=""><br>
-        It was always <input type="text" class="form-control inline-input" name="secondInput" placeholder="adjective" oninput="saveInput('secondInput')" value=""><br>
-        One day, a terrible <input type="text" class="form-control inline-input" name="thirdInput" placeholder="noun" oninput="saveInput('thirdInput')" value=""><br>
-        Charged into the <input type="text" class="form-control inline-input" name="fourthInput" placeholder="noun" oninput="saveInput('fourthInput')" value=""> and <input type="text" class="form-control inline-input" name="fifthInput" placeholder="verb" oninput="saveInput('fifthInput')" value=""> and destroyed every <input type="text" class="form-control inline-input" name="sixthInput" placeholder="noun" oninput="saveInput('sixthInput')" value="">.<br>
-        But luckily, <input type="text" class="form-control inline-input" name="seventhInput" placeholder="noun" oninput="saveInput('seventhInput')" value=""> saved every <input type="text" class="form-control inline-input" name="eighthInput" placeholder="noun" oninput="saveInput('eighthInput')" value="">.
-    </p>
-</div>
-<!-- Footer -->
-<footer>
-    Copyright &copy; Gabby Alger with some help from Dad and ChatGPT Helper: Paige 🐈‍⬛ 
-</footer>
-<!-- Made by input -->
-<div id="madeBy">
-    Made by <input type="text" id="madeByInput" oninput="limitInputLength('madeByInput', 10)" placeholder="Your Name">
-</div>
-<!-- Additional Stories -->
-<div class="container mt-5">
-    <h2>Change the Story</h2>
+    
+    <div class="story">
+        <p class="sentence">
+            Once upon a time there was a <input type="text" class="form-control inline-input" name="firstInput" placeholder="noun" oninput="saveInput('firstInput')" value=""><br>
+            It was always <input type="text" class="form-control inline-input" name="secondInput" placeholder="adjective" oninput="saveInput('secondInput')" value=""><br>
+            One day, a terrible <input type="text" class="form-control inline-input" name="thirdInput" placeholder="noun" oninput="saveInput('thirdInput')" value=""><br>
+            Charged into the <input type="text" class="form-control inline-input" name="fourthInput" placeholder="noun" oninput="saveInput('fourthInput')" value=""> and <input type="text" class="form-control inline-input" name="fifthInput" placeholder="verb" oninput="saveInput('fifthInput')" value=""> and destroyed every <input type="text" class="form-control inline-input" name="sixthInput" placeholder="noun" oninput="saveInput('sixthInput')" value="">.<br>
+            But luckily, <input type="text" class="form-control inline-input" name="seventhInput" placeholder="noun" oninput="saveInput('seventhInput')" value=""> saved every <input type="text" class="form-control inline-input" name="eighthInput" placeholder="noun" oninput="saveInput('eighthInput')" value="">.
+        </p>
+    </div>
+
+    <h2>More Stories</h2>
     <div class="story">
         <p class="sentence">
             The <input type="text" class="form-control inline-input" name="story1Input1" placeholder="noun" oninput="saveInput('story1Input1')" value=""> was very <input type="text" class="form-control inline-input" name="story1Input2" placeholder="adjective" oninput="saveInput('story1Input2')" value=""> because it <input type="text" class="form-control inline-input" name="story1Input3" placeholder="verb" oninput="saveInput('story1Input3')" value=""> all day.<br>
             Suddenly, a <input type="text" class="form-control inline-input" name="story1Input4" placeholder="noun" oninput="saveInput('story1Input4')" value=""> appeared and <input type="text" class="form-control inline-input" name="story1Input5" placeholder="verb" oninput="saveInput('story1Input5')" value=""> the <input type="text" class="form-control inline-input" name="story1Input6" placeholder="noun" oninput="saveInput('story1Input6')" value="">.<br>
         </p>
     </div>
+
     <div class="story">
         <p class="sentence">
             In a distant <input type="text" class="form-control inline-input" name="story2Input1" placeholder="noun" oninput="saveInput('story2Input1')" value="">, there lived a <input type="text" class="form-control inline-input" name="story2Input2" placeholder="adjective" oninput="saveInput('story2Input2')" value=""> <input type="text" class="form-control inline-input" name="story2Input3" placeholder="noun" oninput="saveInput('story2Input3')" value="">.<br>
             Every day, the <input type="text" class="form-control inline-input" name="story2Input4" placeholder="noun" oninput="saveInput('story2Input4')" value=""> would <input type="text" class="form-control inline-input" name="story2Input5" placeholder="verb" oninput="saveInput('story2Input5')" value=""> and <input type="text" class="form-control inline-input" name="story2Input6" placeholder="verb" oninput="saveInput('story2Input6')" value=""> until nightfall.<br>
         </p>
     </div>
+
+    <div id="madeBy">
+        Made by <input type="text" id="madeByInput" oninput="limitInputLength('madeByInput', 10)" placeholder="Your Name">
+    </div>
+
+    <div id="loginSignupButtons">
+        <button class="btn btn-primary" onclick="showLogin()">Log In</button>
+        <button class="btn btn-primary" onclick="showSignup()">Sign Up</button>
+    </div>
 </div>
-<!-- Login and Signup Buttons -->
-<div id="loginSignupButtons">
-    <button onclick="showLogin()">Log In</button>
-    <button onclick="showSignup()">Sign Up</button>
-</div>
+
 <!-- Login Form -->
-<div id="loginContainer">
+<div id="loginContainer" class="auth-container">
     <h2>Login</h2>
     <input type="text" id="loginUsername" placeholder="Username" class="form-control">
     <input type="password" id="loginPassword" placeholder="Password" class="form-control">
-    <button onclick="login()">Login</button>
-    <button onclick="hideLogin()">Cancel</button>
+    <div class="auth-buttons">
+        <button class="btn btn-primary" onclick="login()">Login</button>
+        <button class="btn" onclick="hideLogin()">Cancel</button>
+    </div>
 </div>
+
 <!-- Signup Form -->
-<div id="signupContainer">
+<div id="signupContainer" class="auth-container">
     <h2>Sign Up</h2>
     <input type="text" id="signupUsername" placeholder="Username" class="form-control">
     <input type="password" id="signupPassword" placeholder="Password" class="form-control">
-    <button onclick="signup()">Sign Up</button>
-    <button onclick="hideSignup()">Cancel</button>
+    <div class="auth-buttons">
+        <button class="btn btn-primary" onclick="signup()">Sign Up</button>
+        <button class="btn" onclick="hideSignup()">Cancel</button>
+    </div>
 </div>
+
+<footer>
+    Copyright &copy; Gabby Alger with some help from Dad and ChatGPT Helper: Paige 🐈‍⬛ 
+</footer>
+
 <script>
     let loggedInUser = null;
     let users = JSON.parse(localStorage.getItem('users')) || {};
@@ -180,16 +298,14 @@
         const username = document.getElementById('loginUsername').value;
         const password = document.getElementById('loginPassword').value;
         
-        // Get latest users data from localStorage
         users = JSON.parse(localStorage.getItem('users')) || {};
 
         if (users[username] && users[username] === password) {
             loggedInUser = username;
             alert('Login successful');
             hideLogin();
-            document.getElementById('gameContainer').style.display = 'block';
-            // Add the custom cursor class to the body
-            document.body.classList.add('custom-cursor');
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
         } else {
             alert('Incorrect username or password');
         }
@@ -199,15 +315,15 @@
         const username = document.getElementById('signupUsername').value;
         const password = document.getElementById('signupPassword').value;
 
-        // Get latest users data from localStorage
         users = JSON.parse(localStorage.getItem('users')) || {};
 
         if (!users[username]) {
             users[username] = password;
-            // Save updated users to localStorage
             localStorage.setItem('users', JSON.stringify(users));
             alert('Signup successful');
             hideSignup();
+            document.getElementById('signupUsername').value = '';
+            document.getElementById('signupPassword').value = '';
         } else {
             alert('Username already exists');
         }
@@ -216,6 +332,7 @@
     function clearInputs() {
         const inputs = document.querySelectorAll('input[type="text"]');
         inputs.forEach(input => input.value = '');
+        localStorage.clear();
     }
 
     function saveInput(inputName) {
