@@ -4,6 +4,8 @@ class GeometryDash {
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = 800;
         this.canvas.height = 300;
+        this.flashIntensity = 0;
+        this.flashDecay = 0.03;
         
         this.player = {
             x: 100,
@@ -16,21 +18,35 @@ class GeometryDash {
 
         this.highScore = parseInt(localStorage.getItem('geometryDashHighScore')) || 0;
 
-        this.gravity = 0.8;
-        this.jumpForce = -15;
+        this.gravity = 0.7;  // Slightly reduced gravity for better control
+        this.jumpForce = -13;  // Adjusted jump force
         this.obstacles = [];
-        this.speed = 5;
+        this.baseSpeed = 5;  // Lower base speed for better initial control
+        this.speed = this.baseSpeed;
         this.gameOver = false;
         this.score = 0;
+        this.difficultyMultiplier = 1;
+        this.maxSpeed = 9;  // Cap the maximum speed
+        
+        // Predefined obstacle patterns like Geometry Dash
+        this.obstaclePatterns = [
+            // Basic single obstacle
+            { width: 30, height: 40, gap: 300 },
+            // Double obstacle pattern
+            { width: 30, height: 50, gap: 100, double: true },
+            // Low-high pattern
+            { width: 30, heightLow: 30, heightHigh: 60, gap: 200 },
+            // Triple small obstacles
+            { width: 20, height: 30, gap: 80, triple: true }
+        ];
+        this.currentPattern = 0;
         
         this.init();
     }
 
     init() {
-        // Add initial obstacles
         this.addObstacle();
         
-        // Event listeners
         document.addEventListener('keydown', (e) => {
             if ((e.code === 'Space' || e.code === 'ArrowUp') && !this.player.jumping) {
                 this.player.velocity = this.jumpForce;
@@ -38,22 +54,82 @@ class GeometryDash {
             }
         });
 
-        // Start game loop
         this.gameLoop();
     }
 
     addObstacle() {
-        const height = Math.random() * 60 + 20; // Shorter obstacles
-        this.obstacles.push({
-            x: this.canvas.width,
-            y: this.canvas.height - height,
-            width: 30,
-            height: height
-        });
+        const pattern = this.obstaclePatterns[this.currentPattern];
+        
+        if (pattern.triple) {
+            // Create triple obstacle pattern
+            const height = pattern.height * this.difficultyMultiplier;
+            for (let i = 0; i < 3; i++) {
+                this.obstacles.push({
+                    x: this.canvas.width + (i * pattern.gap),
+                    y: this.canvas.height - height,
+                    width: pattern.width,
+                    height: height
+                });
+            }
+        } else if (pattern.double) {
+            // Create double obstacle pattern
+            const height = pattern.height * this.difficultyMultiplier;
+            this.obstacles.push({
+                x: this.canvas.width,
+                y: this.canvas.height - height,
+                width: pattern.width,
+                height: height
+            });
+            this.obstacles.push({
+                x: this.canvas.width + pattern.gap,
+                y: this.canvas.height - height,
+                width: pattern.width,
+                height: height
+            });
+        } else if (pattern.heightLow && pattern.heightHigh) {
+            // Create low-high pattern
+            const heightLow = pattern.heightLow * this.difficultyMultiplier;
+            const heightHigh = pattern.heightHigh * this.difficultyMultiplier;
+            this.obstacles.push({
+                x: this.canvas.width,
+                y: this.canvas.height - heightLow,
+                width: pattern.width,
+                height: heightLow
+            });
+            this.obstacles.push({
+                x: this.canvas.width + pattern.gap,
+                y: this.canvas.height - heightHigh,
+                width: pattern.width,
+                height: heightHigh
+            });
+        } else {
+            // Create basic pattern
+            const height = pattern.height * this.difficultyMultiplier;
+            this.obstacles.push({
+                x: this.canvas.width,
+                y: this.canvas.height - height,
+                width: pattern.width,
+                height: height
+            });
+        }
+        
+        // Cycle through patterns
+        this.currentPattern = (this.currentPattern + 1) % this.obstaclePatterns.length;
+        
+        this.flashIntensity = 0.6;
     }
 
     update() {
         if (this.gameOver) return;
+
+        // Update speed based on score with a cap
+        this.speed = Math.min(this.maxSpeed, this.baseSpeed + (this.score * 0.15));  // Gentler speed increase
+        this.difficultyMultiplier = 1 + (this.score * 0.04);  // Gentler difficulty curve
+
+        // Update flash effect
+        if (this.flashIntensity > 0) {
+            this.flashIntensity = Math.max(0, this.flashIntensity - this.flashDecay);
+        }
 
         // Update player
         this.player.velocity += this.gravity;
@@ -82,9 +158,10 @@ class GeometryDash {
             }
         });
 
-        // Add new obstacles
-        if (this.obstacles.length < 3) {
-            if (this.obstacles[this.obstacles.length - 1].x < this.canvas.width - 300) {
+        // Add new obstacles with better spacing
+        if (this.obstacles.length < 4) {  // Increased max obstacles for patterns
+            const lastObstacle = this.obstacles[this.obstacles.length - 1];
+            if (lastObstacle && lastObstacle.x < this.canvas.width - 250) {  // Adjusted spacing
                 this.addObstacle();
             }
         }
@@ -135,6 +212,12 @@ class GeometryDash {
         });
         this.ctx.restore();
 
+        // Apply flash effect overlay
+        if (this.flashIntensity > 0) {
+            this.ctx.fillStyle = `rgba(255, 255, 255, ${this.flashIntensity})`;
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+
         // Draw scores with shadow
         this.ctx.save();
         this.ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
@@ -144,6 +227,7 @@ class GeometryDash {
         this.ctx.font = '20px Poppins';
         this.ctx.fillText(`Score: ${this.score}`, 20, 30);
         this.ctx.fillText(`High Score: ${this.highScore}`, 20, 60);
+        this.ctx.fillText(`Speed: ${Math.round(this.speed * 10) / 10}x`, 20, 90);
         this.ctx.restore();
 
         // Draw game over
@@ -168,6 +252,9 @@ class GeometryDash {
         this.obstacles = [];
         this.addObstacle();
         this.gameOver = false;
+        this.speed = this.baseSpeed;
+        this.difficultyMultiplier = 1;
+        this.flashIntensity = 0;
         if (this.score > this.highScore) {
             this.highScore = this.score;
             localStorage.setItem('geometryDashHighScore', this.highScore.toString());

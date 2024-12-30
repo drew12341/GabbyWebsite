@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry Dash</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f3f4f6;
+            font-family: 'Poppins', sans-serif;
+        }
+        .game-container {
+            text-align: center;
+        }
+        canvas {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .game-instructions {
+            margin-top: 20px;
+            color: #4b5563;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <canvas id="geometryDash"></canvas>
+        <p class="game-instructions">Press SPACE or UP ARROW to jump. Press R to restart when game over.</p>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
