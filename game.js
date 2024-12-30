@@ -31,13 +31,13 @@ class GeometryDash {
         // Predefined obstacle patterns like Geometry Dash
         this.obstaclePatterns = [
             // Basic single obstacle
-            { width: 30, height: 40, gap: 300 },
+            { width: 30, height: 40, gap: 400 },
             // Double obstacle pattern
-            { width: 30, height: 50, gap: 100, double: true },
+            { width: 30, height: 50, gap: 250, double: true },
             // Low-high pattern
-            { width: 30, heightLow: 30, heightHigh: 60, gap: 200 },
+            { width: 30, heightLow: 30, heightHigh: 60, gap: 300 },
             // Triple small obstacles
-            { width: 20, height: 30, gap: 80, triple: true }
+            { width: 20, height: 30, gap: 200, triple: true }
         ];
         this.currentPattern = 0;
         
@@ -161,7 +161,7 @@ class GeometryDash {
         // Add new obstacles with better spacing
         if (this.obstacles.length < 4) {  // Increased max obstacles for patterns
             const lastObstacle = this.obstacles[this.obstacles.length - 1];
-            if (lastObstacle && lastObstacle.x < this.canvas.width - 250) {  // Adjusted spacing
+            if (lastObstacle && lastObstacle.x < this.canvas.width - 400) {  // Increased minimum spacing between obstacle patterns
                 this.addObstacle();
             }
         }
