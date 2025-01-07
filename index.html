@@ -123,14 +123,24 @@
     <p class="game-instructions">Press SPACE or UP ARROW to jump. Press R to restart when game over.</p>
 </div>
 
-<!-- Sale Notification Subscription -->
-<div class="subscription-container">
-    <h3>Get Notified of Whittaker's Chocolate Sales!</h3>
-    <div class="subscription-form">
-        <input type="email" id="emailInput" class="form-control" placeholder="Enter your email">
-        <button id="subscribeBtn" class="btn btn-primary">Subscribe</button>
+<!-- Fan Mail Form -->
+<div class="fan-mail-container">
+    <h2>Send Fan Mail to Yourself</h2>
+    <div class="fan-mail-form">
+        <div class="form-group">
+            <label for="emailInput">Your Email:</label>
+            <input type="email" id="emailInput" class="form-control" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="messageInput">Your Fan Message:</label>
+            <textarea id="messageInput" class="form-control" placeholder="Write your fan mail message"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="repeatCount">Number of Times to Send:</label>
+            <input type="number" id="repeatCount" class="form-control" min="1" max="10" value="1">
+        </div>
+        <button id="sendFanMailBtn" class="btn btn-primary">Send Fan Mail</button>
     </div>
-    <p id="subscriptionMessage" class="subscription-message"></p>
 </div>
 
 <footer>

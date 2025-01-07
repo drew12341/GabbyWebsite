@@ -224,47 +224,6 @@ h2 {
     z-index: 10;
 }
 
-/* Subscription Form */
-.subscription-container {
-    background: white;
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    margin: 2rem auto;
-    max-width: 600px;
-    text-align: center;
-}
-
-.subscription-container h3 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-}
-
-.subscription-form {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.subscription-form input {
-    flex: 1;
-    padding: 0.75rem 1rem;
-    border: 2px solid #e2e8f0;
-    border-radius: var(--border-radius);
-    transition: all 0.3s ease;
-}
-
-.subscription-form input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-    outline: none;
-}
-
-.subscription-message {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-}
-
 /* Footer and Made By */
 footer {
     text-align: center;
@@ -412,6 +371,52 @@ footer {
     color: var(--text-color);
     font-size: 0.9rem;
     opacity: 0.8;
+}
+
+/* Fan Mail Form */
+.fan-mail-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.fan-mail-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.fan-mail-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.fan-mail-form label {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.fan-mail-form textarea {
+    min-height: 120px;
+    resize: vertical;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+}
+
+.fan-mail-form textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    outline: none;
+}
+
+.fan-mail-form input[type="number"] {
+    width: 100px;
 }
 
 /* Responsive Design */

@@ -269,63 +269,58 @@ function searchInputs(searchTerm) {
     }
 }
 
-// Email Subscription
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
+// Fan Mail Functions
+function sendFanMail() {
+    const email = document.getElementById('emailInput').value;
+    const message = document.getElementById('messageInput').value;
+    const count = parseInt(document.getElementById('repeatCount').value);
 
-function checkForSales() {
-    // This function would typically be called by a server-side cron job
-    // For now, we'll just store the subscription
-    const subscriptions = JSON.parse(localStorage.getItem('subscriptions')) || [];
-    const message = document.getElementById('subscriptionMessage');
-    message.textContent = `You'll be notified when Whittaker's chocolates go on sale!`;
-    message.style.color = '#10b981'; // Success green color
-}
-
-function handleSubscription() {
-    const emailInput = document.getElementById('emailInput');
-    const email = emailInput.value.trim();
-    const message = document.getElementById('subscriptionMessage');
-
-    if (!email) {
-        message.textContent = 'Please enter an email address';
-        message.style.color = '#ef4444'; // Error red color
+    // Validate inputs
+    if (!email || !message || !count) {
+        alert('Please fill in all fields');
         return;
     }
 
-    if (!isValidEmail(email)) {
-        message.textContent = 'Please enter a valid email address';
-        message.style.color = '#ef4444';
+    if (!email.includes('@')) {
+        alert('Please enter a valid email address');
         return;
     }
 
-    // Store subscription
-    const subscriptions = JSON.parse(localStorage.getItem('subscriptions')) || [];
-    if (!subscriptions.includes(email)) {
-        subscriptions.push(email);
-        localStorage.setItem('subscriptions', JSON.stringify(subscriptions));
+    if (count < 1 || count > 10) {
+        alert('Please enter a number between 1 and 10');
+        return;
     }
 
-    // Clear input and show success message
-    emailInput.value = '';
-    checkForSales();
+    // Simulate sending emails
+    const promises = Array(count).fill().map(() => {
+        return new Promise(resolve => {
+            setTimeout(resolve, Math.random() * 1000);
+        });
+    });
+
+    // Show loading state
+    const button = document.getElementById('sendFanMailBtn');
+    const originalText = button.textContent;
+    button.textContent = 'Sending...';
+    button.disabled = true;
+
+    Promise.all(promises).then(() => {
+        // Reset form
+        document.getElementById('emailInput').value = '';
+        document.getElementById('messageInput').value = '';
+        document.getElementById('repeatCount').value = '1';
+        
+        // Reset button
+        button.textContent = originalText;
+        button.disabled = false;
+
+        // Show success message
+        alert(`Successfully sent ${count} fan mail${count > 1 ? 's' : ''} to yourself!`);
+    });
 }
 
 // Initialize Application
 function initializeApp() {
-    // Set up subscription form
-    const subscribeBtn = document.getElementById('subscribeBtn');
-    const emailInput = document.getElementById('emailInput');
-    
-    subscribeBtn.addEventListener('click', handleSubscription);
-    emailInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            handleSubscription();
-        }
-    });
-
     // Initialize icon visibility
     updateMadeByIcon();
     
@@ -405,4 +400,9 @@ function initializeApp() {
 }
 
 // Start the application when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeApp);
+document.addEventListener('DOMContentLoaded', () => {
+    initializeApp();
+    
+    // Set up fan mail form
+    document.getElementById('sendFanMailBtn').addEventListener('click', sendFanMail);
+});
