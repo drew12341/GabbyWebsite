@@ -319,10 +319,34 @@ function sendFanMail() {
     });
 }
 
+// Tab Switching
+function switchTab(tabId) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    // Remove active class from all tab buttons
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+    });
+    
+    // Show selected tab content and activate button
+    document.getElementById(tabId).classList.add('active');
+    document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+}
+
 // Initialize Application
 function initializeApp() {
     // Initialize icon visibility
     updateMadeByIcon();
+
+    // Set up tab switching
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', () => {
+            switchTab(button.dataset.tab);
+        });
+    });
     
     // Set up icon selection
     const iconOptions = document.querySelectorAll('.icon-option');

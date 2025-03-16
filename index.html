@@ -13,10 +13,19 @@
 </head>
 <body>
 <div class="container">
-    <h1>
-        Fill in the Sentence
-        <button id="clearButton">Clear All</button>
-    </h1>
+    <div class="tabs">
+        <button class="tab-button active" data-tab="stories">Fill in the Sentence</button>
+        <button class="tab-button" data-tab="games">Games</button>
+        <button class="tab-button" data-tab="fanmail">Fan Mail</button>
+        <button class="tab-button" data-tab="profile">Profile</button>
+    </div>
+
+    <!-- Stories Tab -->
+    <div class="tab-content active" id="stories">
+        <h1>
+            Fill in the Sentence
+            <button id="clearButton">Clear All</button>
+        </h1>
     
     <div class="search-container">
         <input type="text" id="searchInput" class="form-control" placeholder="Search for words...">
@@ -117,29 +126,54 @@
     <p style="font-size: 1.5rem;">Time to create some awesome stories! 🚀✨</p>
 </div>
 
-<!-- Geometry Dash Game -->
-<div class="game-container">
-    <canvas id="geometryDash"></canvas>
-    <p class="game-instructions">Press SPACE or UP ARROW to jump. Press R to restart when game over.</p>
-</div>
+    </div>
 
-<!-- Fan Mail Form -->
-<div class="fan-mail-container">
-    <h2>Send Fan Mail to Yourself</h2>
-    <div class="fan-mail-form">
-        <div class="form-group">
-            <label for="emailInput">Your Email:</label>
-            <input type="email" id="emailInput" class="form-control" placeholder="Enter your email">
+    <!-- Games Tab -->
+    <div class="tab-content" id="games">
+        <h1>Games</h1>
+        <div class="game-container">
+            <canvas id="geometryDash"></canvas>
+            <p class="game-instructions">Press SPACE or UP ARROW to jump. Press R to restart when game over.</p>
         </div>
-        <div class="form-group">
-            <label for="messageInput">Your Fan Message:</label>
-            <textarea id="messageInput" class="form-control" placeholder="Write your fan mail message"></textarea>
+    </div>
+
+    <!-- Fan Mail Tab -->
+    <div class="tab-content" id="fanmail">
+        <h1>Fan Mail</h1>
+        <div class="fan-mail-container">
+            <div class="fan-mail-form">
+                <div class="form-group">
+                    <label for="emailInput">Your Email:</label>
+                    <input type="email" id="emailInput" class="form-control" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="messageInput">Your Fan Message:</label>
+                    <textarea id="messageInput" class="form-control" placeholder="Write your fan mail message"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="repeatCount">Number of Times to Send:</label>
+                    <input type="number" id="repeatCount" class="form-control" min="1" max="10" value="1">
+                </div>
+                <button id="sendFanMailBtn" class="btn btn-primary">Send Fan Mail</button>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="repeatCount">Number of Times to Send:</label>
-            <input type="number" id="repeatCount" class="form-control" min="1" max="10" value="1">
+    </div>
+
+    <!-- Profile Tab -->
+    <div class="tab-content" id="profile">
+        <h1>Profile</h1>
+        <div id="madeBy">
+            Made by <input type="text" id="madeByInput" placeholder="Your Name" readonly>
+            <div class="user-icon">
+                <img src="images/cat.svg" alt="User Icon" id="userIcon">
+            </div>
         </div>
-        <button id="sendFanMailBtn" class="btn btn-primary">Send Fan Mail</button>
+
+        <div id="loginSignupButtons">
+            <button class="btn btn-primary" id="showLoginBtn">Log In</button>
+            <button class="btn btn-primary" id="showSignupBtn">Sign Up</button>
+            <button class="btn btn-primary" id="logoutBtn" style="display: none;">Log Out</button>
+        </div>
     </div>
 </div>
 
