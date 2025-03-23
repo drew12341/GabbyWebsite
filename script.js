@@ -620,7 +620,7 @@ function initializeApp() {
     // Show welcome message for first-time visitors
     if (!localStorage.getItem('visited')) {
         setTimeout(() => {
-            showNotification('Welcome to Gabby\'s Creative Corner! Fill in the blanks to create fun stories.', 'info');
+            showNotification('Welcome to Fill in the Sentence! Fill in the blanks to create fun stories.', 'info');
             localStorage.setItem('visited', 'true');
         }, 1000);
     }
