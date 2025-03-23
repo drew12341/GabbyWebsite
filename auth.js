@@ -1,5 +1,4 @@
 // User Management
-let loggedInUser = null;
 let users = JSON.parse(localStorage.getItem('users')) || {};
 
 // Auth UI Functions
@@ -30,9 +29,25 @@ function login() {
         loggedInUser = username;
         hideLogin();
         clearAuthInputs('login');
+        showWelcomeMessage();
+        updateMadeByIcon();
+        updateProfileInfo();
+        
+        // Increment login count in stats
+        if (!userStats[loggedInUser]) {
+            userStats[loggedInUser] = {
+                storiesCreated: 0,
+                gamesPlayed: 0,
+                highScore: 0
+            };
+        }
+        
+        setTimeout(() => {
+            showIconSelector();
+        }, WELCOME_CONFIG.displayTime + 100);
         return true;
     } else {
-        alert('Incorrect username or password');
+        showNotification('Incorrect username or password', 'error');
         return false;
     }
 }
@@ -41,17 +56,37 @@ function signup() {
     const username = document.getElementById('signupUsername').value;
     const password = document.getElementById('signupPassword').value;
 
+    if (!username || !password) {
+        showNotification('Please enter both username and password', 'error');
+        return false;
+    }
+
     users = JSON.parse(localStorage.getItem('users')) || {};
 
     if (!users[username]) {
         users[username] = password;
         localStorage.setItem('users', JSON.stringify(users));
-        alert('Signup successful');
+        
+        // Initialize user stats
+        userStats[username] = {
+            storiesCreated: 0,
+            gamesPlayed: 0,
+            highScore: 0
+        };
+        localStorage.setItem('userStats', JSON.stringify(userStats));
+        
+        showNotification('Signup successful! You can now log in.', 'success');
         hideSignup();
         clearAuthInputs('signup');
+        
+        // Show login form after successful signup
+        setTimeout(() => {
+            showLogin();
+        }, 1000);
+        
         return true;
     } else {
-        alert('Username already exists');
+        showNotification('Username already exists', 'error');
         return false;
     }
 }
@@ -73,15 +108,3 @@ function initializeTestUser() {
         localStorage.setItem('users', JSON.stringify(users));
     }
 }
-
-// Export functions and variables
-export { 
-    loggedInUser,
-    showLogin,
-    hideLogin,
-    showSignup,
-    hideSignup,
-    login,
-    signup,
-    initializeTestUser
-};

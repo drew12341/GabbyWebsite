@@ -1,18 +1,3 @@
-// Animation Configuration
-const CONFETTI_CONFIG = {
-    colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'],
-    count: 150,
-    duration: {
-        min: 2000,
-        max: 5000
-    },
-    spread: 400
-};
-
-const WELCOME_CONFIG = {
-    displayTime: 4000
-};
-
 // Confetti Animation
 function createConfetti() {
     for (let i = 0; i < CONFETTI_CONFIG.count; i++) {
@@ -53,6 +38,3 @@ function showWelcomeMessage() {
         welcomeMsg.style.display = 'none';
     }, WELCOME_CONFIG.displayTime);
 }
-
-// Export functions for use in main script
-export { createConfetti, showWelcomeMessage };
