@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fill in the Sentence</title>
+    <meta name="description" content="Interactive fill-in-the-blank stories and games">
+    <title>Gabby's Creative Corner</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
 </head>
 <body>
 <div class="container">
@@ -25,15 +30,18 @@
     <div class="tab-content active" id="stories">
         <h1>
             Fill in the Sentence
-            <button id="clearButton">Clear All</button>
+            <button id="clearButton"><i class="fas fa-broom"></i> Clear All</button>
         </h1>
     
     <div class="search-container">
         <input type="text" id="searchInput" class="form-control" placeholder="Search for words...">
-        <button id="searchButton" class="btn btn-primary">Search</button>
+        <button id="searchButton" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
     </div>
     
     <div class="story">
+        <div class="story-header">
+            <span class="story-badge">Main Story</span>
+        </div>
         <p class="sentence">
             Once upon a time there was a <input type="text" class="form-control inline-input" name="firstInput" placeholder="noun"><br>
             It was always <input type="text" class="form-control inline-input" name="secondInput" placeholder="adjective"><br>
@@ -44,22 +52,31 @@
     </div>
 
     <h2>More Stories</h2>
-    <div class="story">
-        <p class="sentence">
-            The <input type="text" class="form-control inline-input" name="story1Input1" placeholder="noun"> was very <input type="text" class="form-control inline-input" name="story1Input2" placeholder="adjective"> because it <input type="text" class="form-control inline-input" name="story1Input3" placeholder="verb"> all day.<br>
-            Suddenly, a <input type="text" class="form-control inline-input" name="story1Input4" placeholder="noun"> appeared and <input type="text" class="form-control inline-input" name="story1Input5" placeholder="verb"> the <input type="text" class="form-control inline-input" name="story1Input6" placeholder="noun">.<br>
-        </p>
-    </div>
+    <div class="stories-grid">
+        <div class="story">
+            <div class="story-header">
+                <span class="story-badge">Adventure</span>
+            </div>
+            <p class="sentence">
+                The <input type="text" class="form-control inline-input" name="story1Input1" placeholder="noun"> was very <input type="text" class="form-control inline-input" name="story1Input2" placeholder="adjective"> because it <input type="text" class="form-control inline-input" name="story1Input3" placeholder="verb"> all day.<br>
+                Suddenly, a <input type="text" class="form-control inline-input" name="story1Input4" placeholder="noun"> appeared and <input type="text" class="form-control inline-input" name="story1Input5" placeholder="verb"> the <input type="text" class="form-control inline-input" name="story1Input6" placeholder="noun">.<br>
+            </p>
+        </div>
 
-    <div class="story">
-        <p class="sentence">
-            In a distant <input type="text" class="form-control inline-input" name="story2Input1" placeholder="noun">, there lived a <input type="text" class="form-control inline-input" name="story2Input2" placeholder="adjective"> <input type="text" class="form-control inline-input" name="story2Input3" placeholder="noun">.<br>
-            Every day, the <input type="text" class="form-control inline-input" name="story2Input4" placeholder="noun"> would <input type="text" class="form-control inline-input" name="story2Input5" placeholder="verb"> and <input type="text" class="form-control inline-input" name="story2Input6" placeholder="verb"> until nightfall.<br>
-        </p>
+        <div class="story">
+            <div class="story-header">
+                <span class="story-badge">Fantasy</span>
+            </div>
+            <p class="sentence">
+                In a distant <input type="text" class="form-control inline-input" name="story2Input1" placeholder="noun">, there lived a <input type="text" class="form-control inline-input" name="story2Input2" placeholder="adjective"> <input type="text" class="form-control inline-input" name="story2Input3" placeholder="noun">.<br>
+                Every day, the <input type="text" class="form-control inline-input" name="story2Input4" placeholder="noun"> would <input type="text" class="form-control inline-input" name="story2Input5" placeholder="verb"> and <input type="text" class="form-control inline-input" name="story2Input6" placeholder="verb"> until nightfall.<br>
+            </p>
+        </div>
     </div>
 
     <div id="madeBy">
-        Made by <input type="text" id="madeByInput" placeholder="Your Name" readonly>
+        <div class="made-by-label">Made by</div>
+        <input type="text" id="madeByInput" placeholder="Your Name" readonly>
         <div class="user-icon">
             <img src="images/cat.svg" alt="User Icon" id="userIcon">
         </div>
@@ -74,29 +91,41 @@
 
 <!-- Login Form -->
 <div id="loginContainer" class="auth-container">
-    <h2>Login</h2>
-    <input type="text" id="loginUsername" placeholder="Username" class="form-control">
-    <input type="password" id="loginPassword" placeholder="Password" class="form-control">
+    <h2><i class="fas fa-lock"></i> Login</h2>
+    <div class="input-group">
+        <span class="input-icon"><i class="fas fa-user"></i></span>
+        <input type="text" id="loginUsername" placeholder="Username" class="form-control">
+    </div>
+    <div class="input-group">
+        <span class="input-icon"><i class="fas fa-key"></i></span>
+        <input type="password" id="loginPassword" placeholder="Password" class="form-control">
+    </div>
     <div class="auth-buttons">
         <button class="btn btn-primary" id="loginBtn">Login</button>
-        <button class="btn" id="hideLoginBtn">Cancel</button>
+        <button class="btn btn-secondary" id="hideLoginBtn">Cancel</button>
     </div>
 </div>
 
 <!-- Signup Form -->
 <div id="signupContainer" class="auth-container">
-    <h2>Sign Up</h2>
-    <input type="text" id="signupUsername" placeholder="Username" class="form-control">
-    <input type="password" id="signupPassword" placeholder="Password" class="form-control">
+    <h2><i class="fas fa-user-plus"></i> Sign Up</h2>
+    <div class="input-group">
+        <span class="input-icon"><i class="fas fa-user"></i></span>
+        <input type="text" id="signupUsername" placeholder="Username" class="form-control">
+    </div>
+    <div class="input-group">
+        <span class="input-icon"><i class="fas fa-key"></i></span>
+        <input type="password" id="signupPassword" placeholder="Password" class="form-control">
+    </div>
     <div class="auth-buttons">
         <button class="btn btn-primary" id="signupBtn">Sign Up</button>
-        <button class="btn" id="hideSignupBtn">Cancel</button>
+        <button class="btn btn-secondary" id="hideSignupBtn">Cancel</button>
     </div>
 </div>
 
 <!-- Icon Selection -->
 <div id="iconSelector" class="auth-container">
-    <h2>Choose Your Icon</h2>
+    <h2><i class="fas fa-image"></i> Choose Your Icon</h2>
     <div class="icon-grid">
         <div class="icon-option" data-icon="cat">
             <img src="images/cat.svg" alt="Cat">
@@ -133,6 +162,10 @@
     <div class="tab-content" id="games">
         <h1>Games</h1>
         <div class="game-container">
+            <div class="game-header">
+                <h3>Geometry Dash</h3>
+                <span class="game-badge">Arcade</span>
+            </div>
             <canvas id="geometryDash"></canvas>
             <p class="game-instructions">Press SPACE or UP ARROW to jump. Press R to restart when game over.</p>
         </div>
@@ -144,18 +177,18 @@
         <div class="fan-mail-container">
             <div class="fan-mail-form">
                 <div class="form-group">
-                    <label for="emailInput">Your Email:</label>
+                    <label for="emailInput"><i class="fas fa-envelope"></i> Your Email:</label>
                     <input type="email" id="emailInput" class="form-control" placeholder="Enter your email">
                 </div>
                 <div class="form-group">
-                    <label for="messageInput">Your Fan Message:</label>
+                    <label for="messageInput"><i class="fas fa-comment-alt"></i> Your Fan Message:</label>
                     <textarea id="messageInput" class="form-control" placeholder="Write your fan mail message"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="repeatCount">Number of Times to Send:</label>
+                    <label for="repeatCount"><i class="fas fa-repeat"></i> Number of Times to Send:</label>
                     <input type="number" id="repeatCount" class="form-control" min="1" max="10" value="1">
                 </div>
-                <button id="sendFanMailBtn" class="btn btn-primary">Send Fan Mail</button>
+                <button id="sendFanMailBtn" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Fan Mail</button>
             </div>
         </div>
     </div>
@@ -164,6 +197,10 @@
     <div class="tab-content" id="prototypes">
         <h1>Prototypes</h1>
         <div class="game-container">
+            <div class="game-header">
+                <h3>Pokemon Game</h3>
+                <span class="game-badge">Beta</span>
+            </div>
             <iframe src="pokemon.html" width="800" height="600" frameborder="0"></iframe>
         </div>
     </div>
@@ -171,28 +208,56 @@
     <!-- Profile Tab -->
     <div class="tab-content" id="profile">
         <h1>Profile</h1>
-        <div id="madeBy">
-            Made by <input type="text" id="madeByInput" placeholder="Your Name" readonly>
-            <div class="user-icon">
-                <img src="images/cat.svg" alt="User Icon" id="userIcon">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="user-icon large">
+                    <img src="images/cat.svg" alt="User Icon" id="userIconProfile">
+                </div>
+                <div class="profile-info">
+                    <h3>Welcome, <span id="profileUsername">Guest</span>!</h3>
+                    <p class="profile-status">Status: <span id="profileStatus">Not logged in</span></p>
+                </div>
             </div>
-        </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <i class="fas fa-book"></i>
+                    <span>Stories Created: 0</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Games Played: 0</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-star"></i>
+                    <span>High Score: 0</span>
+                </div>
+            </div>
 
-        <div id="loginSignupButtons">
-            <button class="btn btn-primary" id="showLoginBtn">Log In</button>
-            <button class="btn btn-primary" id="showSignupBtn">Sign Up</button>
-            <button class="btn btn-primary" id="logoutBtn" style="display: none;">Log Out</button>
+            <div id="loginSignupButtons">
+                <button class="btn btn-primary" id="showLoginBtnProfile">Log In</button>
+                <button class="btn btn-primary" id="showSignupBtnProfile">Sign Up</button>
+                <button class="btn btn-primary" id="logoutBtnProfile" style="display: none;">Log Out</button>
+            </div>
         </div>
     </div>
 </div>
 
 <footer>
-    Copyright &copy; Gabby Alger with some help from Dad and ChatGPT Helper: Paige 🐈‍⬛ 
+    <div class="footer-content">
+        <p>Copyright &copy; <span id="currentYear"></span> Gabby Alger</p>
+        <p>With some help from Dad and ChatGPT Helper: Paige 🐈‍⬛</p>
+    </div>
 </footer>
 
 <!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="game.js"></script>
 <script src="storage.js"></script>
 <script src="script.js"></script>
+<script>
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
